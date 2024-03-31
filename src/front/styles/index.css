@@ -1,3 +1,4 @@
+/* CSS de Formularios*/
 .auth-container {
     max-width: 400px;
     margin: 0 auto;
@@ -8,7 +9,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-.title {
+.title-form {
     text-align: center;
     margin-bottom: 20px;
 }
@@ -28,10 +29,6 @@ input {
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-}
-
-button:hover {
-    background-color: #d6d6d6;
 }
 
 .error-message {
@@ -67,7 +64,105 @@ button:hover {
     display: grid;
 }
 
+/* CSS del Home*/
+
+.image-maps {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    text-align: center; 
+}
+
+.map-image {
+    height: 220px;
+    border-radius: 15px;
+    border: 3px solid #ffd700; 
+}
+
+.description-title {
+    font-size: 70px;
+    color: black;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.description-text {
+    font-size: 25px;
+    color: black;
+    text-shadow: 
+        0 0 3px #fff,  
+        0 0 5px #fff,   
+        0 0 10px #fff, 
+        0 0 15px #fff,  
+        1px 1px #fff,   
+        -1px -1px #fff,
+        -1px 1px #fff,  
+        1px -1px #fff;  
+}
+
+.home-container{
+    font-family: 'Play', sans-serif !important;
+}
+
+/* CSS botones Home*/
+
+.btn-custom {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .btn-hide-treasure {
+    background-color: #000000;
+    color:#FFC107;
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-hide-treasure:hover {
+    background-color: #FFC107;
+    transform: scale(1.05);
+  }
+  
+  .btn-find-treasures {
+    background-color: #000000;
+    color: #FFC107; 
+    border: 2px solid #FFC107;
+    font-size: 25px;
+  }
+  
+  .btn-find-treasures:hover {
+    background-color: #FFC107; 
+    transform: scale(1.05);
+  }
+  
+  .btn-custom:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
 /* CSS de Navbar*/
+
+.btn-warning {
+    background: #FFC107;
+    box-shadow: 0 0 25px #FFC107;
+  }
+  
+  .btn-warning:hover {
+    box-shadow: 0 0 5px #FFC107,
+                0 0 15px #FFC107,
+                0 0 30px #FFC107,
+                0 0 50px #FFC107;
+  }
 
 .image {
     width: 100%;
@@ -77,8 +172,8 @@ button:hover {
 }
 
 .imageLogo {
-    width: 100px; 
-    height: auto; 
+    width: 65px; 
+    height: 65px; 
     margin-left: 40px;
 }
 
@@ -97,22 +192,25 @@ button:hover {
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 10px; /* Ajusta este valor según sea necesario para el espaciado */
+    gap: 10px; 
 }
 
 .link-text {
     opacity: 0;
-    transition: opacity 0.5s ease; /* Transición suave en la opacidad */
-    white-space: nowrap; /* Mantiene el texto en una sola línea */
+    transition: opacity 0.5s ease; 
+    white-space: nowrap; 
+    font-family: 'Pirata One', cursive;
+    font-size: 35px;
 }
 
 .navbar-brand:hover .link-text {
-    opacity: 1; /* Hace que el texto sea completamente opaco al pasar el ratón */
+    opacity: 1; 
 }
 
 .icon {
     transition: transform 0.5s ease; 
     color: #FFC107; 
+    font-size: 25px;
 }
 
 .navbar .navbar-brand:hover .icon {
@@ -120,8 +218,9 @@ button:hover {
 }
 
 .navbar {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-    padding: 1rem 2rem; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 1rem 2rem;
+    background-image: linear-gradient(to right, #000000, #000000, #000000)
 }
 
 .navbar-brand {
@@ -134,6 +233,10 @@ button:hover {
 
 .logout {
     color: red;
+}
+
+.boton-navbar{
+    font-family: 'Play', sans-serif !important;
 }
 
 /* CSS de Rankings*/
@@ -239,3 +342,82 @@ button:hover {
 .header .name {
     text-align: left;
 }
+
+/* CSS de Footer*/
+
+.footer {
+    background-color: #000000;
+    color: white;
+    font-size: 13px;
+}
+
+/* CSS de How it Works*/
+
+.container-fluid {
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+    background-color: #000000;
+  }
+  
+  .left-column {
+    flex: 1;
+    padding-right: 20px; 
+  }
+  
+  .right-column {
+    flex: 2;
+    display: flex;
+    justify-content: space-between; 
+  }
+  
+  .image-description {
+    text-align: center;
+    width: 30%; 
+  }
+
+  .how-it-works {
+    font-size: 45px;
+    background: linear-gradient(#ffffff, #FFC107, #ffffff); 
+    -webkit-background-clip: text; 
+    background-clip: text; 
+    -webkit-text-fill-color: transparent; 
+    color: transparent; 
+    display: inline-block; 
+    font-weight: bold;
+  }
+  
+  .how-text {
+    font-size: 25px;
+    color: #ffffff;
+
+  }
+
+  .imagen-how {
+    height: 350px;
+    border-radius: 10px;
+    border: #FFC107 3px solid;
+    box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6), 0 6px 20px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .text-how{
+    font-size: 20px;
+    color: white;
+  }
+
+  .text-links{
+    color: rgb(151, 147, 147);
+  }
+
+/* CSS de Join the adventure*/
+
+  .container-fluid-join {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #3d3900;
+  }
+
+  .join-btn{
+    font-size: 25px;
+  }

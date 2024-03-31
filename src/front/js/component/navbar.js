@@ -39,13 +39,13 @@ export const Navbar = () => {
 				<img src={logoGame} alt="logo" className="imageLogo" />
 			</Link>
 			<Link to="/lista-tesoros" className="navbar-brand mb-0 h1" title="TREASURES">
-				<i className="fas fa-search icon"></i><span className="link-text">TREASURES</span>
+				<i class="fas fa-gem icon"></i><span className="link-text">Treasures</span>
 			</Link>
 			<Link to="/formulario-tesoro" className="navbar-brand mb-0 h1" title="HIDE YOUR TREASURE">
-				<i className="fas fa-eye-slash icon"></i><span className="link-text">HIDE TREASURE</span>
+				<i class="fas fa-map-marked-alt icon"></i><span className="link-text">Hide Treasure</span>
 			</Link>
 			<Link to="/rankings" className="navbar-brand mb-0 h1" title="RANKINGS">
-				<i className="fas fa-trophy icon"></i><span className="link-text">RANKINGS</span>
+				<i className="fas fa-trophy icon"></i><span className="link-text">Rankings</span>
 			</Link>
 			{user ? (
 				<div className="ml-auto dropdown">
@@ -61,11 +61,11 @@ export const Navbar = () => {
 				<div className="ml-auto">
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
 						<Link to="/registro" className="nav-link">
-							<button className="btn btn-warning">Create your account</button>
+							<button className="btn btn-warning boton-navbar">Create your account</button>
 						</Link>
 					</div>
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
-						<Link className="btn-link text-warning" to="/login" onClick={handleLogin}>Login</Link>
+						<Link className="btn-link text-warning boton-navbar" to="/login" onClick={handleLogin}>Login</Link>
 					</div>
 				</div>
 			)}
