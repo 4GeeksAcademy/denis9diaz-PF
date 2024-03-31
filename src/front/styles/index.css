@@ -66,10 +66,11 @@ input {
 
 /* CSS del Home*/
 
-.image-maps {
+.contenido-relleno {
     margin-top: 5rem;
     margin-bottom: 5rem;
     text-align: center; 
+    height: 260px;
 }
 
 .map-image {
@@ -81,6 +82,7 @@ input {
 .description-title {
     font-size: 70px;
     color: black;
+    font-weight: bold;
     text-shadow: 
         0 0 3px #fff,  
         0 0 5px #fff,   
@@ -93,7 +95,7 @@ input {
 }
 
 .description-text {
-    font-size: 25px;
+    font-size: 35px;
     color: black;
     text-shadow: 
         0 0 3px #fff,  
@@ -152,6 +154,34 @@ input {
 
 /* CSS de Navbar*/
 
+.navbar-custom {
+    background-color: #000000;
+    padding-top: 10px;
+    padding-bottom: 5px;
+}
+
+.navbar-custom .navbar-brand .link-text {
+    color: #FFF; 
+    font-family: 'Pirata One', cursive;
+    font-size: 35px; 
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.navbar-custom .navbar-brand:hover .link-text {
+    opacity: 1;
+}
+
+.navbar-custom .navbar-brand .icon {
+    color: #FFC107; 
+    font-size: 32px; 
+    transition: transform 0.5s ease;
+}
+
+.navbar-custom .navbar-brand:hover .icon {
+    transform: scale(1.1); 
+}
+
 .btn-warning {
     background: #FFC107;
     box-shadow: 0 0 25px #FFC107;
@@ -164,71 +194,10 @@ input {
                 0 0 50px #FFC107;
   }
 
-.image {
-    width: 100%;
-    max-width: 400px; 
-    margin-bottom: 20px; 
-    border-radius: 40px;
-}
-
 .imageLogo {
-    width: 65px; 
-    height: 65px; 
+    width: 70px; 
+    height: 70px; 
     margin-left: 40px;
-}
-
-.navbar .navbar-brand .link-text {
-    display: inline-block; 
-    margin-left: 8px;
-    opacity: 0; 
-    transition: opacity 0.5s ease; 
-    white-space: nowrap; 
-}
-
-.navbar .navbar-brand:hover .link-text {
-    opacity: 1; 
-}
-
-.navbar-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px; 
-}
-
-.link-text {
-    opacity: 0;
-    transition: opacity 0.5s ease; 
-    white-space: nowrap; 
-    font-family: 'Pirata One', cursive;
-    font-size: 35px;
-}
-
-.navbar-brand:hover .link-text {
-    opacity: 1; 
-}
-
-.icon {
-    transition: transform 0.5s ease; 
-    color: #FFC107; 
-    font-size: 25px;
-}
-
-.navbar .navbar-brand:hover .icon {
-    transform: scale(1.1); 
-}
-
-.navbar {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1rem 2rem;
-    background-image: linear-gradient(to right, #000000, #000000, #000000)
-}
-
-.navbar-brand {
-    transition: all 0.3s ease; 
-}
-
-.navbar-brand:hover {
-    transform: translateY(-2px); 
 }
 
 .logout {
@@ -237,6 +206,12 @@ input {
 
 .boton-navbar{
     font-family: 'Play', sans-serif !important;
+}
+
+.text-navbar{
+    color: #ffffff;
+    font-size: 20px;
+    font-family: 'Pirata One', cursive;
 }
 
 /* CSS de Rankings*/
@@ -400,10 +375,19 @@ input {
     box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.6), 0 6px 20px 0 rgba(255, 255, 255, 0.2);
   }
 
+.imagen-how:hover {
+    transform: scale(1.1);
+}
+
   .text-how{
     font-size: 20px;
     color: white;
   }
+
+  .text-how-2{
+    font-size: 20px;
+    color: #FFC107;
+}
 
   .text-links{
     color: rgb(151, 147, 147);
@@ -411,13 +395,29 @@ input {
 
 /* CSS de Join the adventure*/
 
-  .container-fluid-join {
+.container-fluid-join {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    justify-content: flex-start;
     background-color: #3d3900;
-  }
+    margin-top: auto;
+}
 
-  .join-btn{
+.join-btn {
     font-size: 25px;
-  }
+}
+
+.text-login-join {
+    font-size: 15px;
+    color: #ccc;
+}
+
+.image-description,
+.text-description {
+    flex: 1; 
+}
+
+.text-description {
+    margin-top: auto; 
+}

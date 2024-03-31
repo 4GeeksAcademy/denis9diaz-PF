@@ -34,18 +34,21 @@ export const Navbar = () => {
 	};
 
 	return (
-		<nav className="navbar navbar-dark bg-black bg-light pe-5">
-			<Link to="/">
-				<img src={logoGame} alt="logo" className="imageLogo" />
-			</Link>
+		<nav className="navbar navbar-custom pe-5">
+			<div>
+				<Link to="/">
+					<img src={logoGame} alt="logo" className="imageLogo" />
+				</Link>
+			<p className="text-navbar ps-3">URBAN TREASURES</p>
+			</div>
 			<Link to="/lista-tesoros" className="navbar-brand mb-0 h1" title="TREASURES">
-				<i class="fas fa-gem icon"></i><span className="link-text">Treasures</span>
+				<i class="fas fa-gem icon me-3"></i><span className="link-text">Treasures</span>
 			</Link>
 			<Link to="/formulario-tesoro" className="navbar-brand mb-0 h1" title="HIDE YOUR TREASURE">
-				<i class="fas fa-map-marked-alt icon"></i><span className="link-text">Hide Treasure</span>
+				<i class="fas fa-map-marked-alt icon me-3"></i><span className="link-text">Hide Treasure</span>
 			</Link>
 			<Link to="/rankings" className="navbar-brand mb-0 h1" title="RANKINGS">
-				<i className="fas fa-trophy icon"></i><span className="link-text">Rankings</span>
+				<i className="fas fa-trophy icon me-3"></i><span className="link-text">Rankings</span>
 			</Link>
 			{user ? (
 				<div className="ml-auto dropdown">
