@@ -155,7 +155,7 @@ input {
 /* CSS de Navbar*/
 
 .navbar-custom {
-    background-color: #000000;
+    background: black;
     padding-top: 10px;
     padding-bottom: 5px;
 }
@@ -222,6 +222,7 @@ input {
     color: white;
     padding: 20px;
     gap: 20px; 
+    font-family: 'Play', sans-serif !important;
 }
 
 .ranking {
@@ -318,6 +319,45 @@ input {
     text-align: left;
 }
 
+.rankings-options{
+    background-color: #000000;
+    text-align: center;
+    font-size: 25px;
+}
+
+.button-rankigns-options {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Play', sans-serif !important;
+  }
+
+  .button-rankigns-options:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .button-rankigns-options {
+    background-color: #000000;
+    color:#ffffff;
+    border: 2px solid #ffffff;
+    font-size: 20px;
+  }
+  
+  .button-rankigns-options:hover {
+    background-color: #ffffff;
+    color: black;
+    transform: scale(1.05);
+  }
+  
+.ranking-companies {
+    max-width: 60%; 
+    margin: 0 auto; 
+}
+
 /* CSS de Footer*/
 
 .footer {
@@ -332,7 +372,7 @@ input {
     display: flex;
     flex-direction: column; 
     align-items: flex-start;
-    background-color: #000000;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
   }
   
   .left-column {
@@ -390,7 +430,7 @@ input {
 }
 
   .text-links{
-    color: rgb(151, 147, 147);
+    color: rgb(185, 182, 182);
   }
 
 /* CSS de Join the adventure*/
@@ -400,7 +440,7 @@ input {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    background-color: #3d3900;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
     margin-top: auto;
 }
 
@@ -420,4 +460,39 @@ input {
 
 .text-description {
     margin-top: auto; 
+}
+
+/* CSS de Companys*/
+
+.container-fluid-company{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background-image: linear-gradient(to bottom, #000000, #2e2e2e);
+    margin-top: auto;
+}
+
+/* CSS de Profile*/
+
+.profile-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
+}
+
+/* CSS de TreasureForm*/
+
+.treasure-form-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
+}
+
+/* CSS de TreasureList*/
+
+.treasure-list-page{
+    font-family: 'Play', sans-serif !important;
+    background-color: #000000;
+    color: white;
 }
