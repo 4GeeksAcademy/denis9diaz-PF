@@ -155,9 +155,14 @@ input {
 /* CSS de Navbar*/
 
 .navbar-custom {
-    background: black;
-    padding-top: 10px;
-    padding-bottom: 5px;
+    background: transparent; 
+    padding-top: 10px; 
+    padding-bottom: 5px; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%;
+    z-index: 1000; 
 }
 
 .navbar-custom .navbar-brand .link-text {
@@ -209,7 +214,7 @@ input {
 }
 
 .text-navbar{
-    color: #ffffff;
+    color: #000000;
     font-size: 20px;
     font-family: 'Pirata One', cursive;
 }
