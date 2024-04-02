@@ -186,30 +186,65 @@ input {
 }
 
 .navbar-group-left .navbar-brand {
-    margin-right: 65px; 
+    margin-right: 45px; 
 }
 
 .navbar-custom .navbar-brand .link-text {
     color: #ffffff; 
     font-family: 'Pirata One', cursive;
-    font-size: 35px; 
+    font-size: 33px; 
     opacity: 0;
     transition: opacity 0.5s ease;
 }
+
+.div-bar {
+    display: flex; 
+    align-items: center; 
+  }
+  
+  .div-icono, .div-texto {
+    display: flex; 
+    align-items: center;
+  }
 
 .navbar-custom .navbar-brand:hover .link-text {
     opacity: 1;
 }
 
-.navbar-custom .navbar-brand .icon {
+.navbar-custom .navbar-brand .icon1 {
     color: #FFC107; 
-    font-size: 32px; 
+    height: 50px; 
+    width: 60px;
     transition: transform 0.5s ease;
     text-shadow: 0 0 25px #FFC107;
 }
 
-.navbar-custom .navbar-brand:hover .icon {
+.navbar-custom .navbar-brand:hover .icon1 {
     transform: scale(1.1); 
+}
+
+.navbar-custom .navbar-brand .icon2 {
+    color: #FFC107; 
+    height: 50px; 
+    width: 40px;
+    transition: transform 0.5s ease;
+    text-shadow: 0 0 25px #FFC107;
+}
+
+.navbar-custom .navbar-brand:hover .icon2 {
+    transform: scale(1.2); 
+}
+
+.navbar-custom .navbar-brand .icon3 {
+    color: #FFC107; 
+    height: 35px; 
+    width: 70px;
+    transition: transform 0.5s ease;
+    text-shadow: 0 0 25px #FFC107;
+}
+
+.navbar-custom .navbar-brand:hover .icon3 {
+    transform: scale(1.2); 
 }
 
 .btn-warning {
@@ -607,6 +642,7 @@ input {
 
 .image-status {
     height: 100px;
+    width: 100px;
     border: 2px solid #FFC107; 
     border-radius: 10px;
 }
