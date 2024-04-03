@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "./../store/appContext"
@@ -6,12 +6,6 @@ import { Context } from "./../store/appContext"
 const TreasureForm = () => {
     const { store, actions } = useContext(Context)
     const navigate = useNavigate();
-    const [name, setName] = useState("");
-    const [location, setLocation] = useState("");
-    const [image, setImage] = useState("");
-    const [pistas, setPistas] = useState("");
-    const [city, setCitys] = useState("");
-    const [error, setError] = useState("");
 
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
@@ -22,26 +16,9 @@ const TreasureForm = () => {
         }
     }, [navigate]);
 
-    const registerTreasure = async (e) => {
-        e.preventDefault();
-        setError("");
-
-        const resp = await fetch(process.env.BACKEND_URL + "/api/treasure", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, location, image, pistas, city })
-        });
-
-        if (!resp.ok) throw Error("There was a problem in the resgister request");
-
-        const data = await resp.json();
-        navigate("/lista-tesoros");
-        return data;
-    };
-
     return (
         <div className="text-center treasure-form-page">
-            <form onSubmit={registerTreasure}>
+            <form>
                 <h1 className="title-hide pb-4">Hide your treasure</h1>
                 <div className="hide-input-group pb-4">
                     <label htmlFor="name-treasure">Name</label>
@@ -50,8 +27,7 @@ const TreasureForm = () => {
                         id="name"
                         className="treasure-name"
                         placeholder="Enter name of treasure"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value="{name}"
                     />
                 </div>
                 <div className="hide-input-group pb-4">
@@ -61,8 +37,7 @@ const TreasureForm = () => {
                         id="location"
                         className="treasure-location"
                         placeholder="Enter location"
-                        value={location}
-                        onChange={(e) => setLocation(e.target.value)}
+                        value="{location}"
                     />
                 </div>
                 <div className="hide-input-group pb-4">
@@ -73,8 +48,7 @@ const TreasureForm = () => {
                             id="city"
                             className="treasure-image"
                             placeholder="Enter city"
-                            value={city}
-                            onChange={(e) => setCitys(e.target.value)}
+                            value="{city}"
                         />
                     </div>
                 </div>
@@ -86,8 +60,7 @@ const TreasureForm = () => {
                             id="pistas"
                             className="treasure-image"
                             placeholder="Enter your pistas"
-                            value={pistas}
-                            onChange={(e) => setPistas(e.target.value)}
+                            value="{pistas}"
                         />
                     </div>
                 </div>
@@ -99,12 +72,10 @@ const TreasureForm = () => {
                             id="image"
                             className="treasure-image"
                             placeholder="Enter your image"
-                            value={image}
-                            onChange={(e) => setImage(e.target.value)}
+                            value="{image}"
                         />
                     </div>
                 </div>
-                {error && <div className="error-message mb-4">{error}</div>}
                 <div className="button-hide">
                     <button type="submit" className="btn btn-warning">Register</button>
                 </div>
