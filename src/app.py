@@ -4,6 +4,7 @@ from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
 from api.models import db, User
+from api.models import db, Treasures
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
@@ -81,7 +82,7 @@ def serve_any_other_file(path):
 def register():
     body = request.get_json(silent = True)
     if body is None:
-        return jsonify({'msg': "Debes eniar información en el body"}), 400
+        return jsonify({'msg': "Debes enviar información en el body"}), 400
     if 'email' not in body:
         return jsonify({'msg': "El campo email es obligatorio"}), 400
     if 'password' not in body:
@@ -114,6 +115,43 @@ def login():
     access_token = create_access_token(identity=user.email)
     return jsonify({'msg': "Login aceptado",
                     'token': access_token})
+
+
+
+
+@app.route('/api/treasure', methods=['POST'])
+def treasures():
+    body = request.get_json(silent = True)
+    if body is None:
+        return jsonify({'msg': "Debes enviar información en el body"}), 400
+    if 'name' not in body:
+        return jsonify({'msg': "El campo name es obligatorio"}), 400
+    if 'location' not in body:
+        return jsonify({'msg': "El campo location es obligatorio"}), 400
+    if 'image' not in body:
+        return jsonify({'msg': "El campo image es obligatorio"}), 400
+    if 'tips' not in body:
+        return jsonify({'msg': "El campo tips es obligatorio"}), 400
+    if 'city' not in body:
+        return jsonify({'msg': "El campo city es obligatorio"}), 400
+    new_treasure = Treasures()
+    new_treasure.name = body['name']
+    new_treasure.location = body['location']
+    new_treasure.image = body['image']
+    new_treasure.tips = body['tips']
+    new_treasure.city = body['city']
+    db.session.add (new_treasure)
+    db.session.commit()
+    return jsonify({"msg": "El tesoro ha sido registrado con exito"}), 201
+
+
+@app.route('/api/treasures', methods=['GET'])
+def get_treasures():
+    all_treasures = Treasures.query.all()  
+    result = [treasure.serialize() for treasure in all_treasures]  
+    return jsonify(result), 200
+
+
 
 
 @app.route('/api/protected', methods=['GET'])
