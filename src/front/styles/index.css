@@ -621,6 +621,9 @@ input {
 /* CSS de Profile*/
 
 .profile-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     font-family: 'Play', sans-serif !important;
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     color: white;
@@ -629,21 +632,145 @@ input {
     height: 100vh;
 }
 
-.profile-title {
-    display: inline-block;
-    padding: 5px 10px;
+.profile-cont {
+    display: flex;
+    width: 100%;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: transparent;
+    color: white;
+    font-size: 25px;
+    text-align: left;
+    padding-left: 50px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.sidebar ul li.active {
+    background-color: #000000;
+    color: white;
+    border-radius: 10px;
+}
+
+.content {
+    flex: 4;
+    padding-left: 20px;
+}
+
+.photo-container img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    text-align: left;
+    margin-right: 20px;
+}
+
+.user-info h2,
+.user-info p {
+    margin: 5px 0;
+}
+
+.elementos-profile td {
+    text-align: left;
+    vertical-align: middle;
+    font-size: 18px;
+}
+
+.image-title-profile {
+    width: 200px;
+}
+
+.name-title-profile {
+    width: 250px;
+}
+
+.description-title-list-profile {
+    width: 350px;
+}
+
+.city-title-profile {
+    width: 200px;
+}
+
+.title-hide-profile{
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.table-list-profile {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    padding-left: 150px;
+    text-align: left;
+    text-align: center;
+}
+
+.table-list-profile th,
+.table-list-profile td {
+    border: 0.5px solid #5f5f5f;
+}
+
+.configuration {
+    padding-left: 150px;
+    text-align: left;
+}
+
+.my-profile {
+    display: flex;
+    align-items: center;
+    padding-left: 150px;
+
+}
+
+.treasures-activity{
+    padding-left: 150px;
+    text-align: left;
+}
+
+.photo-user {
+    border-radius: 100px;
+    height: 200px;
+    width: 200px;
+    border: 3px solid #FFC107;
+}
+
+.user-info {
+    text-align: left;
+}
+
+.username-text-profile {
     font-size: 50px;
-    color: black;
-    font-weight: bold;
-    text-shadow:
-        0 0 3px #fff,
-        0 0 5px #fff,
-        0 0 10px #fff,
-        0 0 15px #fff,
-        1px 1px #fff,
-        -1px -1px #fff,
-        -1px 1px #fff,
-        1px -1px #fff;
+    color: transparent;
+    background: linear-gradient(to bottom, #FFC107, white);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.status-text-profile {
+    font-size: 32px;
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.points-text-profile {
+    font-size: 32px;
+    text-shadow: 2px 2px 6px #ccc;
+}
+
+.image-status-profile {
+    height: 60px;
+    width: 60px;
+    border: 2px solid #FFC107;
+    border-radius: 7px;
 }
 
 /* CSS de TreasureForm*/
