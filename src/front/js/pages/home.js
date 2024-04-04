@@ -19,10 +19,14 @@ export const Home = () => {
                 </div>
                 <div className="action-buttons pt-5">
                     <Link to="/lista-tesoros">
-                        <button className="btn btn-custom btn-find-treasures mt-3">Find treasures</button>
+                        <button role="button" className="golden-button me-4">
+                            <span className="golden-text">FIND TREASURES</span>
+                        </button>
                     </Link>
                     <Link to="/formulario-tesoro">
-                        <button className="btn btn-custom btn-hide-treasure mt-3 ms-4">Hide a treasure</button>
+                        <button role="button" className="golden-button">
+                            <span className="golden-text">HIDE A TREASURE</span>
+                        </button>
                     </Link>
                 </div>
                 <div className="contenido-relleno">
