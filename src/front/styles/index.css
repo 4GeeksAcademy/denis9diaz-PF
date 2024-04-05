@@ -459,6 +459,11 @@ input {
     margin: 0 auto;
 }
 
+.ranking-users {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
 .text-ranks-div {
     font-size: 25px;
     color: white;
@@ -1050,4 +1055,177 @@ input {
   .social-links a:hover {
     color: #d3c015;
   }
-  
+
+/* CSS de Contact */
+
+.page-contact{
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 150px;
+    padding-bottom: 50px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.contact {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #f9f9f9e5;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contact-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-description {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #666;
+    font-size: 16px;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+
+.additional-contact-info {
+    margin-top: 20px;
+}
+
+.additional-contact-info p {
+    font-size: 16px;
+    color: #666;
+}
+
+.additional-contact-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.additional-contact-info ul li {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 5px;
+}
+
+/* CSS de AboutUs */
+
+.about-us-page {
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(to bottom, #575757 0%, #000000 100%);
+    padding-top: 150px;
+    padding-bottom: 50px;
+    font-family: 'Outfit', sans-serif;
+    color: #ebebeb;
+}
+
+.about-us-page.container {
+    margin: 0; 
+    max-width: 100%; 
+    padding-left: 300px;
+    padding-right: 300px;
+}
+
+.about-us-banner {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 22px;
+}
+
+.about-us-banner h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+.about-us-content p {
+    text-align: justify;
+    margin: 20px 0;
+    font-size: 22px;
+}
+
+.about-us-team {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.about-us-team h2 {
+    font-size: 1.5em;
+    color: #f0f0f0;
+    padding-bottom: 15px;
+}
+
+.team-members {
+    display: flex;
+    justify-content: center;
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+.team-member {
+    width: 200px; 
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; 
+    margin-bottom: 10px;
+}
+
+.team-member h3 {
+    margin: 0;
+    font-size: 1em;
+    color: #ffffff; 
+}
+
+.team-member p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #b8b8b8;
+}

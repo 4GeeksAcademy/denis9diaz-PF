@@ -12,16 +12,9 @@ const Rankings = () => {
             </div>
             <div className="rankings-container">
                 {view === 'Users' && (
-                    <>
-                        <div className="ranking">
-                            <h1>HIDERS</h1>
-                            {rankingTable('Hider')}
-                        </div>
-                        <div className="ranking">
-                            <h1>FINDERS</h1>
-                            {rankingTable('Finder')}
-                        </div>
-                    </>
+                    <div className="ranking ranking-users">
+                        {rankingTable('User')}
+                    </div>
                 )}
 
                 {view === 'Companies' && (

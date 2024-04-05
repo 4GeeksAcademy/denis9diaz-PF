@@ -13,7 +13,6 @@ export const Footer = () => (
           <h5>Quick Links</h5>
           <ul className="footer-links">
             <li><a href="/about-us">About Us</a></li>
-            <li><a href="/products">Products</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
         </div>
@@ -30,7 +29,7 @@ export const Footer = () => (
       <div className="row">
         <div className="col-12 text-center">
           <p>© 2024 Urban Treasures. All rights reserved.</p>
-          <p>Performed for Ernesto, Javier & Denis.</p>
+          <p>Performed by Ernesto, Javier & Denis.</p>
         </div>
       </div>
     </div>
