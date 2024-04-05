@@ -6,7 +6,7 @@ const Rankings = () => {
 
     return (
         <div className="rankings-div">
-            <div className="rankings-options pt-3">
+            <div className="rankings-options pt-1">
                 <button className="button-rankigns-options me-3" onClick={() => setView('Users')}>Users</button>
                 <button className="button-rankigns-options" onClick={() => setView('Companies')}>Companies</button>
             </div>
@@ -30,7 +30,7 @@ const Rankings = () => {
                     </div>
                 )}
             </div>
-            <div className="text-ranks-div"><p className="text-ranks">Click to see more about<Link to="/puntuacion" className="link-ranks">Status & Score</Link></p></div>
+            <div className="text-ranks-div pb-5"><p className="text-ranks">Click to see more about<Link to="/puntuacion" className="link-ranks">Status & Score</Link></p></div>
         </div>
     );
 }
