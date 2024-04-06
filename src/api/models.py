@@ -48,7 +48,8 @@ class Treasures_Hide (db.Model):
     name =db.Column(db.String(30), nullable=False)
     image =db.Column(db.String, nullable=False)
     location =db.Column(db.String, nullable=False)
-    cities_id=db.Column(db.Integer, db.ForeignKey('cities.id'))
+    tips =db.Column(db.String, nullable=False)
+    city_name=db.Column(db.String, db.ForeignKey('cities.name'))
     cities_relationship = db.relationship(Cities)
     founded=db.Column(db.Boolean(), nullable=True)
     
