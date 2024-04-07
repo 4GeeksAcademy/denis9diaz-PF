@@ -848,7 +848,7 @@ input {
 }
 
 .table-list {
-    background-color: black;
+    background-color: rgba(0, 0, 0, 0.85);
     color: white;
     margin: 0 auto;
     font-size: 25px;

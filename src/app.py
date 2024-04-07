@@ -121,6 +121,49 @@ def login():
                     'token': access_token})
 
 
+@app.route('/api/treasure', methods=['POST'])
+def treasure():
+    body = request.get_json(silent = True)
+    if body is None:
+        return jsonify({'msg': "Debes enviar información en el body"}), 400
+    if 'name' not in body:
+        return jsonify({'msg': "El campo name es obligatorio"}), 400
+    if 'image' not in body:
+        return jsonify({'msg': "El campo image es obligatorio"}), 400
+    if "location" not in body:
+        return jsonify({"msg": "El campo location es obligatorio"}), 400
+    if "city_name" not in body:
+        return jsonify({"msg": "El campo city_name es obligatorio"}), 400
+    if "tips" not in body:
+        return jsonify({"msg": "El campo tips es obligatorio"}), 400
+    new_treasure = Treasures_Hide()
+    new_treasure.name = body['name']
+    new_treasure.image = body["image"]
+    new_treasure.location = body["location"]
+    new_treasure.tips = body["tips"]
+    new_treasure.city_name = body["city_name"]
+    db.session.add (new_treasure)
+    db.session.commit()
+    return jsonify({"msg": "El tesoro ha sido registrado con exito"}), 201
+
+
+@app.route('/api/treasures', methods=['GET'])
+def get_treasures():
+    treasures = Treasures_Hide.query.all() 
+    results = []
+    for treasure in treasures:
+        treasure_data = {
+            'name': treasure.name,
+            'image': treasure.image,
+            'location': treasure.location,
+            'city_name': treasure.city_name,
+            'tips': treasure.tips
+        }
+        results.append(treasure_data)
+    
+    return jsonify(results), 200
+
+
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
 def protected():
