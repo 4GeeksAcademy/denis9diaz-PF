@@ -15,7 +15,7 @@ class Cities (db.Model):
     name = db.Column(db.String(30), unique=True, nullable=False)
 
     def __repr__(self):
-        return "Ciudad con id: {} de nombre: {}".format (self.id, self.name)
+        return "{}".format (self.name)
 
     def serialize(self): 
         return {
@@ -48,9 +48,9 @@ class Treasures_Hide (db.Model):
     name =db.Column(db.String(30), nullable=False)
     image =db.Column(db.String, nullable=False)
     location =db.Column(db.String, nullable=False)
-    tips =db.Column(db.String, nullable=False)
+    tips =db.Column(db.String,nullable=False)
     city_name=db.Column(db.String, db.ForeignKey('cities.name'))
-    cities_relationship = db.relationship(Cities)
+    city_relationship = db.relationship(Cities)
     founded=db.Column(db.Boolean(), nullable=True)
     
     def __repr__(self):
@@ -68,20 +68,20 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    user_name =db.Column(db.String(30), unique=True, nullable=False)
+    username =db.Column(db.String(30), unique=True, nullable=False)
     user_type = db.Column(db.Enum(MyEnum), nullable=False)
     points = db.Column(db.Integer, default=0)
     status_id = db.Column(db.Integer, db.ForeignKey('status.id'),default=1, nullable=False)
     status_relationship = db.relationship(Status)
 
     def __repr__(self):
-        return "Usuario de Nombre{} con email {} y status {}".format (self.user_name, self.email, self.status_name)
+        return "Usuario de Nombre{} con email {} y status {}".format (self.username, self.email, self.status_name)
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "user_name":self.user_name,
+            "user_name":self.username,
             "status_name":self.status_name
         }
     

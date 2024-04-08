@@ -11,14 +11,11 @@ export const Navbar = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(null);
 
-	useEffect(() => {
-		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			setUser("denis9diaz@hotmail.com");
-		} else {
-			setUser(null);
-		}
-	}, [localStorage.getItem("jwt-token")]);
+	const handleLogout = () => {
+		localStorage.removeItem("jwt-token");
+		setUser(null);
+		navigate("/");
+	};
 
 	const handleLogin = () => {
 		const token = localStorage.getItem("jwt-token");
@@ -30,11 +27,37 @@ export const Navbar = () => {
 		}
 	};
 
-	const handleLogout = () => {
-		localStorage.removeItem("jwt-token");
-		setUser(null);
-		navigate("/");
-	};
+	useEffect(() => {
+		const token = localStorage.getItem("jwt-token");
+		if (token) {
+			setUser("denis9diaz@hotmail.com");
+		} else {
+			setUser(null);
+		}
+	}, [localStorage.getItem("jwt-token")]);
+
+	useEffect(() => {
+		const token = localStorage.getItem("jwt-token");
+		if (token) {
+			fetch('/api/current-user', {
+				method: 'GET',
+				headers: {
+					'Authorization': `Bearer ${token}`
+				}
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (data.email) {
+					setUser(data.email);
+				}
+			})
+			.catch(error => {
+				console.error('Error al obtener los detalles del usuario:', error);
+			});
+		} else {
+			setUser(null);
+		}
+	}, [localStorage.getItem("jwt-token")]);
 
 	return (
 		<nav className="navbar navbar-custom pe-5">

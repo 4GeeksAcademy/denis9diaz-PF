@@ -49,13 +49,11 @@ app.register_blueprint(api, url_prefix='/api')
 
 # Handle/serialize errors like a JSON object
 
-
 @app.errorhandler(APIException)
 def handle_invalid_usage(error):
     return jsonify(error.to_dict()), error.status_code
 
 # generate sitemap with all your endpoints
-
 
 @app.route('/')
 def sitemap():
@@ -65,8 +63,16 @@ def sitemap():
 
 # any other endpoint will try to serve it like a static file
 
+@app.route('/<path:path>', methods=['GET'])
+def serve_any_other_file(path):
+    if not os.path.isfile(os.path.join(static_file_dir, path)):
+        path = 'index.html'
+    response = send_from_directory(static_file_dir, path)
+    response.cache_control.max_age = 0  # avoid cache memory
+    return response
 
-''' -----------------------------------------------------------POST----------------------------------------------------'''
+''' ------------------------------------POST-----------------------------------------'''
+
 
 @app.route('/api/hide', methods=['POST'])
 def hide_treasure():
@@ -74,15 +80,15 @@ def hide_treasure():
     if body is None:
         return jsonify({'msg': "Debes enviar informacion en el body"}), 400
     if 'name' not in body:
-        return jsonify({'msg': "Name requerido"}), 400
+        return jsonify({'msg': "El campo name es requerido"}), 400
     if 'image' not in body:
-        return jsonify({'msg':"Image requerida"}), 400
+        return jsonify({'msg':"El campo image es requerido"}), 400
     if 'location' not in body:
-        return jsonify({'msg':"location requerida"}),400
+        return jsonify({'msg':"El campo location es requerido"}),400
     if 'city_name' not in body:
-        return jsonify({'msg':"city_name requerida"}), 400
+        return jsonify({'msg':"El campo city_name es requerido"}), 400
     if 'tips' not in body:
-        return jsonify({'msg':"tips requerido"}),400
+        return jsonify({'msg':"El campo tips es requerido"}),400
     new_treasure = Treasures_Hide()
     new_treasure.name = body['name']
     new_treasure.image = body['image']
@@ -91,7 +97,7 @@ def hide_treasure():
     new_treasure.tips = body['tips']
     db.session.add (new_treasure)
     db.session.commit()
-    return jsonify({'msg': " Tesoro enterrado con exito"}), 201
+    return jsonify({'msg': "Tesoro ocultado con exito"}), 201
 
 
 @app.route('/api/register', methods=['POST'])
@@ -105,13 +111,13 @@ def register():
         return jsonify({'msg': "El campo password es obligatorio"}), 400
     if "user_type" not in body:
         return jsonify({"msg": "El campo user_type es obligatorio"}), 400
-    if "user_name" not in body:
-        return jsonify({"msg": "El campo user_name es obligatorio"}), 400
+    if "username" not in body:
+        return jsonify({"msg": "El campo username es obligatorio"}), 400
     new_user = User()
     new_user.email = body['email']
     pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
     new_user.password = pw_hash
-    new_user.user_name = body["user_name"]
+    new_user.username = body["username"]
     new_user.user_type = body["user_type"]
     db.session.add (new_user)
     db.session.commit()
@@ -122,7 +128,7 @@ def register():
 def login():
     body = request.get_json(silent = True)
     if body is None:
-        return jsonify({'msg': "Debes eniar información en el body"}), 400
+        return jsonify({'msg': "Debes enviar información en el body"}), 400
     if 'email' not in body:
         return jsonify({'msg': "El campo email es obligatorio"}), 400
     if 'password' not in body:
@@ -137,14 +143,9 @@ def login():
     return jsonify({'msg': "Login aceptado",
                     'token': access_token})
 
-'''--------------------------------------------------------------------GET------------------------------------------------------- '''
-@app.route('/<path:path>', methods=['GET'])
-def serve_any_other_file(path):
-    if not os.path.isfile(os.path.join(static_file_dir, path)):
-        path = 'index.html'
-    response = send_from_directory(static_file_dir, path)
-    response.cache_control.max_age = 0  # avoid cache memory
-    return response
+
+'''-------------------------------------GET------------------------------------------- '''
+
 
 @app.route('/api/treasures', methods=['GET'])
 def get_treasures():
@@ -162,12 +163,22 @@ def get_treasures():
     return jsonify(result), 200
 
 
-
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
 def protected():
     current_user = get_jwt_identity()
     return jsonify(logged_in_as=current_user), 200
+
+
+@app.route('/api/current-user', methods=['GET'])
+@jwt_required()
+def get_current_user():
+    current_user_email = get_jwt_identity()
+    user = User.query.filter_by(email=current_user_email).first()
+    if user:
+        return jsonify(user.serialize()), 200
+    else:
+        return jsonify({"msg": "Usuario no encontrado"}), 404
 
 
 # this only runs if `$ python src/main.py` is executed

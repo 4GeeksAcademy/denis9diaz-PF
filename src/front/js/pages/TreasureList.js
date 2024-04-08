@@ -14,7 +14,7 @@ useEffect(() =>{
                 method: "GET"
             });
 
-            if (!response.ok) throw new Error ("This treasure map is imposible to read")
+            if (!response.ok) throw new Error ("Failed to update treasure list")
 
             const data = await response.json();
             setTreasures(data);
