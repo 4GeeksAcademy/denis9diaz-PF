@@ -197,6 +197,13 @@ def get_user_treasures(user_id):
     return jsonify(result), 200
 
 
+@app.route('/api/user/<int:user_id>/found-treasures', methods=['GET'])
+def get_user_treasures_found(user_id):
+    treasures = db.session.query(Treasures_Founded).filter(Treasures_Founded.user_found_id == user_id).all()
+    result = [treasure.serialize() for treasure in treasures]  
+    return jsonify(result), 200
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
