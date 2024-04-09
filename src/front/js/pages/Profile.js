@@ -7,8 +7,31 @@ const Profile = () => {
     const [activeSection, setActiveSection] = useState("Profile");
     const [userData, setUserData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [hiddenTreasures, setHiddenTreasures] = useState([]);
     const changeSection = (section) => {
         setActiveSection(section);
+    };
+
+    const fetchUserTreasures = async (userId) => {
+        setIsLoading(true);
+        try {
+            const token = localStorage.getItem("jwt-token");
+            const response = await fetch(`${process.env.BACKEND_URL}/api/user/${userId}/hide-treasures`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+            });
+            const treasures = await response.json();
+            if (response.ok) {
+                setHiddenTreasures(treasures);
+            } else {
+                console.error("Error fetching treasures:", treasures.message);
+            }
+        } catch (error) {
+            console.error("Error fetching treasures: ", error);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
@@ -20,11 +43,17 @@ const Profile = () => {
         }
     }, [navigate]);
 
+    useEffect(() => {
+        if (userData) {
+            fetchUserTreasures(userData.id);
+        }
+    }, [userData]);
+
     const fetchUserData = async () => {
         setIsLoading(true);
         try {
             const token = localStorage.getItem("jwt-token");
-            const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+            const response = await fetch(process.env.BACKEND_URL + '/api/current-user', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 },
@@ -45,7 +74,7 @@ const Profile = () => {
         }
     };
     if (isLoading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>;
     }
 
     return (
@@ -104,13 +133,13 @@ const Profile = () => {
                                         <th className="city-title-profile">City</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr className="elementos-profile" >
-                                        <td className="image-elements-profile"><img src="t" alt="Hidden Treasure" /></td>
-                                        <td className="name-elements-profile ps-2"></td>
-                                        <td className="city-elements-profile ps-2"></td>
+                                {hiddenTreasures.map(treasure => (
+                                    <tr className="elementos-profile" key={treasure.id}>
+                                        <td className="image-elements-profile"><img src={treasure.image} alt="Hidden Treasure" /></td>
+                                        <td className="name-elements-profile ps-2">{treasure.name}</td>
+                                        <td className="city-elements-profile ps-2">{treasure.city_name}</td>
                                     </tr>
-                                </tbody>
+                                ))}
                             </table>
                         </div>
                     )}

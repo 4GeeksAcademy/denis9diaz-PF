@@ -83,6 +83,8 @@ class Treasures_Hide (db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "image": self.image,
+            "city_name": self.city_name
         }
     
 class Treasures_Founded(db.Model):
