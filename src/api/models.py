@@ -8,7 +8,6 @@ class MyEnum(enum.Enum):
     user ='user'
     company = 'company'
 
-
 class Cities (db.Model):
     __tablename__= 'cities'
     id = db.Column(db.Integer, primary_key=True)
@@ -23,7 +22,6 @@ class Cities (db.Model):
             "name": self.name,
         }
 
-
 class Status (db.Model):
     __tablename__= 'status'
     id = db.Column(db.Integer, primary_key=True)
@@ -32,7 +30,7 @@ class Status (db.Model):
     points_max= db.Column(db.Integer)
 
     def __repr__(self):
-        return "Nivel de Status: {}".format (self.name)
+        return "Status: {}".format (self.name)
 
     def serialize(self): 
         return {
@@ -41,27 +39,6 @@ class Status (db.Model):
             "points_min": self.points_min,
             "points_max": self.points_max
         }
-
-class Treasures_Hide (db.Model):
-    __tablename__= 'treasures_hide'
-    id = db.Column(db.Integer, primary_key=True)
-    name =db.Column(db.String(30), nullable=False)
-    image =db.Column(db.String, nullable=False)
-    location =db.Column(db.String, nullable=False)
-    tips =db.Column(db.String,nullable=False)
-    city_name=db.Column(db.String, db.ForeignKey('cities.name'))
-    city_relationship = db.relationship(Cities)
-    founded=db.Column(db.Boolean(), nullable=True)
-    
-    def __repr__(self):
-        return "Tesoro escondido: {}".format (self.name)
-
-    def serialize(self): 
-        return {
-            "id": self.id,
-            "name": self.name,
-        }
-
 
 class User(db.Model):
     __tablename__='user'
@@ -75,14 +52,37 @@ class User(db.Model):
     status_relationship = db.relationship(Status)
 
     def __repr__(self):
-        return "Usuario de Nombre{} con email {} y status {}".format (self.username, self.email, self.status_name)
+        return "Usuario {}, con email {} y status {}".format (self.username, self.email, self.status_id)
 
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            "user_name":self.username,
-            "status_name":self.status_name
+            "username":self.username,
+            "points": self.points,
+            "status_id": self.status_id
+        }
+    
+class Treasures_Hide (db.Model):
+    __tablename__= 'treasures_hide'
+    id = db.Column(db.Integer, primary_key=True)
+    name =db.Column(db.String(30), nullable=False)
+    image =db.Column(db.String, nullable=False)
+    location =db.Column(db.String, nullable=False)
+    tips =db.Column(db.String,nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_relationship = db.relationship(User)
+    city_name=db.Column(db.String, db.ForeignKey('cities.name'))
+    city_relationship = db.relationship(Cities)
+    founded=db.Column(db.Boolean(), nullable=True)
+    
+    def __repr__(self):
+        return "Tesoro escondido: {}".format (self.name)
+
+    def serialize(self): 
+        return {
+            "id": self.id,
+            "name": self.name,
         }
     
 class Treasures_Founded(db.Model):

@@ -17,46 +17,35 @@ export const Navbar = () => {
 		navigate("/");
 	};
 
-	const handleLogin = () => {
-		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			setUser("denis9diaz@hotmail.com");
-			navigate("/perfil");
-		} else {
-			navigate("/login");
-		}
-	};
-
 	useEffect(() => {
 		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			setUser("denis9diaz@hotmail.com");
-		} else {
-			setUser(null);
-		}
-	}, [localStorage.getItem("jwt-token")]);
-
-	useEffect(() => {
-		const token = localStorage.getItem("jwt-token");
-		if (token) {
-			fetch('/api/current-user', {
-				method: 'GET',
-				headers: {
-					'Authorization': `Bearer ${token}`
+	
+		const fetchUserData = async () => {
+			if (token) {
+				try {
+					const response = await fetch( process.env.BACKEND_URL + '/api/current-user', {
+						method: 'GET',
+						headers: {
+							'Authorization': `Bearer ${token}`
+						}
+					});
+					const data = await response.json();
+	
+					if (data.username) {
+						setUser(data.username);
+					} else {
+						setUser(null);
+					}
+				} catch (error) {
+					console.error(error);
+					setUser(null);
 				}
-			})
-			.then(response => response.json())
-			.then(data => {
-				if (data.email) {
-					setUser(data.email);
-				}
-			})
-			.catch(error => {
-				console.error('Error al obtener los detalles del usuario:', error);
-			});
-		} else {
-			setUser(null);
-		}
+			} else {
+				setUser(null);
+			}
+		};
+	
+		fetchUserData();
 	}, [localStorage.getItem("jwt-token")]);
 
 	return (
@@ -97,7 +86,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 					<div style={{ display: "inline-block", marginRight: "10px" }}>
-						<Link className="btn-link text-warning boton-navbar" to="/login" onClick={handleLogin}>Login</Link>
+						<Link className="btn-link text-warning boton-navbar" to="/login">Login</Link>
 					</div>
 				</div>
 			)}

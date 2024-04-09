@@ -848,10 +848,11 @@ input {
 }
 
 .table-list {
-    background-color: rgba(0, 0, 0, 0.85);
+    background-color: black;
     color: white;
     margin: 0 auto;
     font-size: 25px;
+    opacity: 0.9; 
 }
 
 .table-list th,
