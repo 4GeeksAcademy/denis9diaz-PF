@@ -9,6 +9,9 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [hiddenTreasures, setHiddenTreasures] = useState([]);
     const [foundTreasures, setFoundTreasures] = useState([]);
+    const [profileImage, setProfileImage] = useState(null);
+    const [uploadError, setUploadError] = useState('');
+
     const changeSection = (section) => {
         setActiveSection(section);
     };
@@ -69,7 +72,7 @@ const Profile = () => {
     useEffect(() => {
         if (userData) {
             fetchUserTreasures(userData.id);
-            fetchUserTreasuresFound(userData.id); 
+            fetchUserTreasuresFound(userData.id);
         }
     }, [userData]);
 
@@ -85,7 +88,6 @@ const Profile = () => {
             const data = await response.json();
             if (response.ok) {
                 setUserData(data);
-                console.log("User data fetched successfully:", data);
             } else {
                 console.error("Error fetching user data:", data.message);
                 setUserData({});
@@ -97,9 +99,66 @@ const Profile = () => {
             setIsLoading(false);
         }
     };
+
+    const uploadProfileImage = () => {
+        if (!profileImage) {
+            setUploadError('Por favor, seleccione una imagen para subir.');
+            return;
+        }
+        setUploadError('');
+        const formData = new FormData();
+        formData.append("file", profileImage);
+        formData.append("upload_preset", "treasure");
+
+        fetch("https://api.cloudinary.com/v1_1/dxzhssh9m/image/upload", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.secure_url) {
+                    updateProfileImage(data.secure_url);
+                } else {
+                    throw new Error('La URL de la imagen no está disponible.');
+                }
+            })
+            .catch(error => {
+                console.error("Error al subir la imagen:", error);
+                setUploadError('Error uploading the profile image');
+            });
+    };
+
+    const updateProfileImage = (imageUrl) => {
+        const token = localStorage.getItem("jwt-token");
+
+        fetch(`${process.env.BACKEND_URL}/api/update-profile-image`, {
+            method: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ photo: imageUrl })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('La respuesta del servidor no fue OK.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Imagen de perfil actualizada con éxito", data);
+                fetchUserData();
+            })
+            .catch(error => {
+                console.error("Error al actualizar la imagen del perfil:", error);
+                setUploadError('Error updating profile image');
+            });
+    };
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
+
 
     return (
         <div className="profile-page text-center">
@@ -115,7 +174,18 @@ const Profile = () => {
                         <>
                             <div className="my-profile">
                                 <div className="photo-container">
-                                    <img src={userData.profilePhoto || "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
+                                    <img src={userData.photo || "https://st.depositphotos.com/1537427/3571/v/450/depositphotos_35717211-stock-illustration-vector-user-icon.jpg"} alt="Profile" className="photo-user" />
+                                    <label htmlFor="file-upload" className="edit-photo-label">Edit photo</label>
+                                    <input
+                                        id="file-upload"
+                                        type="file"
+                                        onChange={e => {
+                                            setProfileImage(e.target.files[0]);
+                                            uploadProfileImage();
+                                        }}
+                                        className="file-input"
+                                        style={{ display: 'none' }}
+                                    />
                                 </div>
                                 <div className="user-info ps-3">
                                     <p className="username-text-profile">{userData.username || "No Username"}</p>
@@ -172,6 +242,9 @@ const Profile = () => {
                         </div>
                     )}
                 </div>
+            </div>
+            <div className="text-center pt-2 pb-2">
+                {uploadError && <p className="text-danger">{uploadError}</p>}
             </div>
         </div>
     );
