@@ -275,6 +275,21 @@ def get_treasure(treasure_id):
     return jsonify(treasure_data), 200
 
 
+@app.route('/api/rankings/<type>', methods=['GET'])
+def get_rankings(type):
+    try:
+        if type == 'Users':
+            users = User.query.filter_by(user_type='user').order_by(User.points.desc()).limit(10).all()
+        elif type == 'Companies':
+            users = User.query.filter_by(user_type='company').order_by(User.points.desc()).limit(10).all()
+        else:
+            return jsonify({"error": "Invalid type"}), 400
+
+        return jsonify([user.serialize() for user in users]), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))

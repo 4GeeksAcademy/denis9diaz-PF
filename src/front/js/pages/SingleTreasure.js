@@ -22,7 +22,6 @@ const SingleTreasure = () => {
     const loadTreasure = async () => {
         try {
             const url = `${process.env.BACKEND_URL}/api/treasure/${id}`;
-            console.log("URL de la petición:", url);
             const token = localStorage.getItem("jwt-token");
             const response = await fetch(url, {
                 method: "GET",
