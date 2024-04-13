@@ -10,8 +10,9 @@ const TreasureForm = () => {
     const [city_name, setCity_name] = useState('');
     const [tips, setTips] = useState('');
     const [image, setImage] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState(''); 
     const [error, setError] = useState('');
+    const [cities, setCities] = useState([]);
 
     useEffect(() => {
         const token = localStorage.getItem("jwt-token");
@@ -19,12 +20,23 @@ const TreasureForm = () => {
             navigate("/login");
         } else {
             actions.getMyTasks();
+            fetchCities();
         }
     }, [navigate, actions]);
 
-    useEffect(() => {
-        if (imageUrl) hideTreasure();
-    }, [imageUrl]);
+    useEffect(() => { 
+        if (imageUrl) hideTreasure(); 
+    }, [imageUrl]); 
+
+    const fetchCities = async () => {
+        try {
+            const response = await fetch(process.env.BACKEND_URL + '/api/cities');
+            const data = await response.json();
+            setCities(data); 
+        } catch (error) {
+            console.error("Error fetching cities:", error);
+        }
+    };
 
     const uploadImage = () => {
         const formData = new FormData();
@@ -37,7 +49,7 @@ const TreasureForm = () => {
         })
         .then(response => response.json())
         .then(data => {
-            setImageUrl(data.url);
+            setImageUrl(data.url); 
         })
         .catch(error => {
             setError("Upload error");
@@ -55,7 +67,7 @@ const TreasureForm = () => {
                     "Content-Type": "application/json",
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, location, city_name, tips, image: imageUrl })
+                body: JSON.stringify({ name, location, city_name, tips, image: imageUrl }) 
             });
 
             if (!response.ok) throw new Error("This treasure doesn't exist");
@@ -86,6 +98,19 @@ const TreasureForm = () => {
                     />
                 </div>
                 <div className="hide-input-group pb-4">
+                    <label htmlFor="pistas">Tips</label>
+                    <div className="treasure-pistas">
+                        <input
+                            type="text"
+                            id="tips"
+                            className="treasure-tips"
+                            placeholder="Enter your tips"
+                            value={tips}
+                            onChange={e=> setTips(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="hide-input-group pb-4">
                     <label htmlFor="location">Location</label>
                     <input
                         type="text"
@@ -99,27 +124,19 @@ const TreasureForm = () => {
                 <div className="hide-input-group pb-4">
                     <label htmlFor="pistas">City</label>
                     <div className="treasure-city">
-                        <input
-                            type="text"
+                        <select
                             id="city"
                             className="treasure-city"
-                            placeholder="Enter city"
+                            style={{width: "190px"}}
                             value={city_name}
                             onChange={e=> setCity_name(e.target.value)}
-                        />
-                    </div>
-                </div>
-                <div className="hide-input-group pb-4">
-                    <label htmlFor="pistas">Tips</label>
-                    <div className="treasure-pistas">
-                        <input
-                            type="text"
-                            id="tips"
-                            className="treasure-tips"
-                            placeholder="Enter your tips"
-                            value={tips}
-                            onChange={e=> setTips(e.target.value)}
-                        />
+                        >
+                            {cities.map((city) => (
+                                <option key={city.name} value={city.name}>
+                                    {city.name}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                 </div>
                 <div className="hide-input-group pb-4">

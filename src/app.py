@@ -167,16 +167,55 @@ def update_profile_image():
     return jsonify({'msg': "Imagen de perfil actualizada con éxito"}), 200
 
 
+@app.route('/api/treasure/<int:treasure_id>/found', methods=['POST'])
+@jwt_required()
+def mark_treasure_as_found(treasure_id):
+    user_email = get_jwt_identity()
+
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({'msg': "Usuario no encontrado"}), 404
+
+    treasure = Treasures_Hide.query.filter_by(id=treasure_id).first()
+    if not treasure:
+        return jsonify({'msg': "Tesoro no encontrado"}), 404
+
+    if treasure.founded:
+        return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
+
+    treasure.founded = True
+
+    user.points += 10
+    db.session.add(user)
+
+    user_hid = User.query.filter_by(id=treasure.user_id).first()
+    if user_hid:
+        user_hid.points += 10
+        db.session.add(user_hid)
+
+    new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
+    db.session.add(new_treasure_found)
+    db.session.commit()
+
+    return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
+
+
 '''-------------------------------------GET------------------------------------------- '''
+
+
+@app.route('/api/cities', methods=['GET'])
+def get_cities():
+    cities = Cities.query.all()
+    cities_list = [city.serialize() for city in cities]
+    return jsonify(cities_list), 200
 
 
 @app.route('/api/treasures', methods=['GET'])
 def get_treasures():
-    treasures = db.session.query(Treasures_Hide, User).join(User).all()
-    print(treasures)
-    result =[]
+    treasures = db.session.query(Treasures_Hide, User).join(User).filter(Treasures_Hide.founded == False).all()
+    result = []
     for treasure, user in treasures:
-        treasure_data ={
+        treasure_data = {
             "id": treasure.id,
             "name": treasure.name,
             "image": treasure.image,
@@ -188,7 +227,7 @@ def get_treasures():
         }
         result.append(treasure_data)
     return jsonify(result), 200
-    
+
 
 @app.route('/api/protected', methods=['GET'])
 @jwt_required()
