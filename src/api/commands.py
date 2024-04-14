@@ -13,7 +13,7 @@ statuses = [{"name": "Amateur","points": {"points_min": 0, "points_max":99, "ima
             {"name": "Gold", "points":{"points_min": 300, "points_max":499, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/4_jw9ixh.png"}},
             {"name": "Platinum", "points":{"points_min": 500, "points_max":699, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952500/5_bgqk87.png"}},
             {"name": "Diamond", "points":{"points_min": 700, "points_max":999, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/6_nc29qr.png"}},
-            {"name": "Legendary", "points":{"points_min": 1000, "points_max":None, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/7_j6fuph.png"}},]
+            {"name": "Legendary", "points":{"points_min": 1000, "points_max":10000000, "image": "https://res.cloudinary.com/dxzhssh9m/image/upload/v1712952499/7_j6fuph.png"}},]
 
 cities = [
     {"name": "A Coruña"},
