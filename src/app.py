@@ -290,6 +290,15 @@ def get_rankings(type):
         return jsonify({"error": str(e)}), 500
     
 
+@app.route('/api/status-by-points/<int:points>', methods=['GET'])
+def get_status_by_points(points):
+    status = Status.query.filter(Status.points_min <= points, Status.points_max >= points).first()
+    if status:
+        return jsonify(status.serialize()), 200
+    else:
+        return jsonify({'msg': "No se encontró un status válido para los puntos dados"}), 404
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
