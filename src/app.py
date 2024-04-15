@@ -13,6 +13,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
+import re
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -109,14 +110,25 @@ def register():
     body = request.get_json(silent = True)
     if body is None:
         return jsonify({'msg': "Debes enviar información en el body"}), 400
-    if 'email' not in body:
-        return jsonify({'msg': "El campo email es obligatorio"}), 400
+    if 'email' not in body or body["email"] == "":
+        return jsonify({'msg': "Email is mandatory"}), 400
+    if not re.match(r'\S+@\S+\.\S+', body['email']):
+        return jsonify({'msg': "Invalid email format"}), 400
     if 'password' not in body:
         return jsonify({'msg': "El campo password es obligatorio"}), 400
     if "user_type" not in body:
         return jsonify({"msg": "El campo user_type es obligatorio"}), 400
-    if "username" not in body:
-        return jsonify({"msg": "El campo username es obligatorio"}), 400
+    if "username" not in body or body["username"] == "":
+        return jsonify({"msg": "Username is mandatory"}), 400
+    
+    user_exist = User.query.filter_by(email=body["email"]).first()
+    username_exist = User.query.filter_by(username=body["username"]).first()
+
+    if user_exist != None:
+        return jsonify({"msg": "Email already registered"}), 400
+    if username_exist != None:
+        return jsonify({"msg": "Username already exist"}), 400
+    
     new_user = User()
     new_user.email = body['email']
     pw_hash = bcrypt.generate_password_hash(body["password"]).decode("utf-8")
@@ -188,10 +200,10 @@ def mark_treasure_as_found(treasure_id):
     user.points += 10
     db.session.add(user)
 
-    user_hid = User.query.filter_by(id=treasure.user_id).first()
-    if user_hid:
-        user_hid.points += 10
-        db.session.add(user_hid)
+    user_hide = User.query.filter_by(id=treasure.user_id).first()
+    if user_hide:
+        user_hide.points += 10
+        db.session.add(user_hide)
 
     new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
     db.session.add(new_treasure_found)
@@ -201,13 +213,6 @@ def mark_treasure_as_found(treasure_id):
 
 
 '''-------------------------------------GET------------------------------------------- '''
-
-
-@app.route('/api/cities', methods=['GET'])
-def get_cities():
-    cities = Cities.query.all()
-    cities_list = [city.serialize() for city in cities]
-    return jsonify(cities_list), 200
 
 
 @app.route('/api/treasures', methods=['GET'])
@@ -275,6 +280,13 @@ def get_treasure(treasure_id):
     return jsonify(treasure_data), 200
 
 
+@app.route('/api/cities', methods=['GET'])
+def get_cities():
+    cities = Cities.query.all()
+    cities_list = [city.serialize() for city in cities]
+    return jsonify(cities_list), 200
+
+
 @app.route('/api/rankings/<type>', methods=['GET'])
 def get_rankings(type):
     try:
@@ -288,7 +300,7 @@ def get_rankings(type):
         return jsonify([user.serialize() for user in users]), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
+
 
 @app.route('/api/status-by-points/<int:points>', methods=['GET'])
 def get_status_by_points(points):

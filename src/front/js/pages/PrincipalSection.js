@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import backgroundImage from '/src/front/img/backgroundImage.png';
 
-
 const PrincipalSection = () => {
     return (
         <div className="principal-section text-center" style={{ backgroundImage: `url(${backgroundImage})`, minHeight:"100vh", backgroundSize: 'cover', backgroundPosition: 'center', padding: '100px 0' }}>
