@@ -127,7 +127,7 @@ def register():
     if user_exist != None:
         return jsonify({"msg": "Email already registered"}), 400
     if username_exist != None:
-        return jsonify({"msg": "Username already exist"}), 400
+        return jsonify({"msg": "Username already exists"}), 400
     
     new_user = User()
     new_user.email = body['email']
@@ -195,6 +195,9 @@ def mark_treasure_as_found(treasure_id):
     if treasure.founded:
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
 
+    if user.id == treasure.user_id:
+        return jsonify({'msg': "You can not mark a treasure as found if you hid it yourself"}), 403
+
     treasure.founded = True
 
     user.points += 10
@@ -228,7 +231,8 @@ def get_treasures():
             "city_name": treasure.city_name,
             "tips": treasure.tips,
             "user_id": treasure.user_id,
-            "username": user.username
+            "username": user.username,
+            "userPhoto": user.photo,
         }
         result.append(treasure_data)
     return jsonify(result), 200
@@ -304,12 +308,42 @@ def get_rankings(type):
 
 @app.route('/api/status-by-points/<int:points>', methods=['GET'])
 def get_status_by_points(points):
-    status = Status.query.filter(Status.points_min <= points, Status.points_max >= points).first()
-    if status:
-        return jsonify(status.serialize()), 200
+    current_status = Status.query.filter(Status.points_min <= points, Status.points_max >= points).first()
+    if not current_status:
+        return jsonify({'msg': "No se encontró un estado válido para los puntos dados"}), 404
+    
+    next_status = Status.query.filter(Status.points_min > points).order_by(Status.points_min.asc()).first()
+    if next_status:
+        progress = (points - current_status.points_min) / (next_status.points_min - current_status.points_min) * 100
     else:
-        return jsonify({'msg': "No se encontró un status válido para los puntos dados"}), 404
+        next_status = current_status  
+        progress = 100
 
+    return jsonify({
+        'current_status': current_status.serialize(),
+        'next_status': next_status.serialize() if next_status != current_status else None,
+        'progress': progress
+    }), 200
+
+
+'''-------------------------------------------PUT-------------------------------------------------'''
+
+
+@app.route('/api/update-username/<int:user_id>', methods=['PUT'])
+def update_username(user_id):
+    user = User.query.get(user_id)
+    if not user:
+        return jsonify({"error": "User not found"}), 404
+
+    data = request.get_json()
+    new_username = data.get('username')
+    if not new_username:
+        return jsonify({"error": "New username is required"}), 400
+
+    user.username = new_username
+    db.session.commit()
+    return jsonify({"message": "Username updated successfully"}), 200
+    
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

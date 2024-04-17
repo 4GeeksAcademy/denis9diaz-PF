@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "./../store/appContext";
+import Swal from 'sweetalert2';
 
 const SingleTreasure = () => {
     const { store, actions } = useContext(Context);
@@ -51,17 +52,45 @@ const SingleTreasure = () => {
                     "Authorization": `Bearer ${token}`,
                 },
             });
-
+    
             if (response.ok) {
-                alert("Treasure found! You win 10 points!");
-                navigate("/treasures"); 
+                Swal.fire({
+                    title: '¡Treasure Found!',
+                    text: 'Earn 10 points',
+                    icon: 'success',
+                    confirmButtonText: 'Perfect'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        navigate("/treasures");
+                    }
+                });
+            } else if (response.status === 403) {
+                const data = await response.json(); 
+                Swal.fire({
+                    title: 'Action Forbidden',
+                    text: data.msg,
+                    icon: 'warning',
+                    confirmButtonText: 'Close'
+                });
             } else {
-                alert("Couldn't mark treasure as found");
+                const data = await response.json();
+                Swal.fire({
+                    title: 'Error',
+                    text: data.msg || 'Could not mark treasure as found',
+                    icon: 'error',
+                    confirmButtonText: 'Close'
+                });
             }
         } catch (error) {
-            console.error("Error al marcar el tesoro:", error);
+            console.error("Error marking the treasure:", error);
+            Swal.fire({
+                title: 'Error',
+                text: 'An error occurred while trying to mark the treasure',
+                icon: 'error',
+                confirmButtonText: 'Close'
+            });
         }
-    };
+    };    
 
     if (!treasure) {
         return (
@@ -70,7 +99,6 @@ const SingleTreasure = () => {
             </div>
         );
     }
-
 
     return (
         <div className="single-treasure-page">

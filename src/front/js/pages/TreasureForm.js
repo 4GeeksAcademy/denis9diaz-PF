@@ -81,7 +81,7 @@ const TreasureForm = () => {
                 body: JSON.stringify({ name, location: locationUrl, city_name, tips, image: uploadedImageUrl }) 
             });
 
-            if (!response.ok) throw new Error("This treasure doesn't exist");
+            if (!response.ok) throw new Error("Fail to hide treasure");
 
             await response.json();
             navigate("/treasures");
@@ -161,7 +161,7 @@ const TreasureForm = () => {
                     />
                 </div>
                 <div className="button-hide">
-                    <button type="submit" className="btn btn-warning">Hide</button>
+                    <button type="submit" className="btn btn-hide">Hide</button>
                 </div>
                 {error && <div className="error-message">{error}</div>}
             </form>
