@@ -892,8 +892,8 @@ input {
 
 .hide-input-group {
     text-align: left;
-    font-size: 23px;
-    width: 80vh;
+    font-size: 20px;
+    width: 70vh;
 }
 
 .treasure-image-form{
@@ -943,6 +943,10 @@ input {
     color: #000000; 
     transform: scale(1.1); 
     box-shadow: 4px 4px 12px rgba(0,0,0,0.3); 
+}
+
+.button-hide{
+    padding-bottom: 50px;
 }
 
 /* CSS de TreasureList*/

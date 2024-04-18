@@ -126,7 +126,7 @@ const TreasureForm = () => {
                     <label htmlFor="location">Location (Select on the map where you have hidden the treasure)</label>
                     <LoadScript googleMapsApiKey="AIzaSyCTGrpUkNXzG9IGFu5xWq1ag5x3HIfoqnU">
                         <GoogleMap
-                            mapContainerStyle={{ width: '100%', height: '400px' }}
+                            mapContainerStyle={{ width: '100%', height: '350px' }}
                             center={location}
                             zoom={10}
                             onClick={onMapClick}
