@@ -15,7 +15,9 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import re
 from flask_mail import Mail, Message
-
+import random
+import string
+from datetime import datetime
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
@@ -87,6 +89,56 @@ def serve_any_other_file(path):
 
 
 ''' ------------------------------------POST-----------------------------------------'''
+
+
+@app.route('/api/forgot-password', methods=['POST'])
+def forgot_password():
+    body = request.get_json()
+    email = body.get('email')
+    if not email:
+        return jsonify({'msg': "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({'msg': "No user found with that email"}), 404
+
+    temp_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
+    user.temp_password = bcrypt.generate_password_hash(temp_password).decode('utf-8')
+    user.temp_password_time = datetime.utcnow()
+    db.session.commit()
+
+    msg = Message(subject="Your temporary password",
+                  sender="urbantreasures.info@gmail.com",
+                  recipients=[user.email])
+    msg.html = f"<h3>Your temporary password is: {temp_password}</h3>"
+    mail.send(msg)
+
+    return jsonify({"msg": "Temporary password sent to your email"}), 200
+
+
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    body = request.get_json()
+    temp_password = body.get('temp_password')
+    new_password = body.get('new_password')
+    reset_token = body.get('reset_token')
+
+    if not temp_password or not new_password or not reset_token:
+        return jsonify({'msg': "All fields are required"}), 422
+
+    user = User.query.filter_by(reset_token=reset_token).first()
+
+    if not user:
+        return jsonify({'msg': "Invalid or expired reset token"}), 404
+
+    if (datetime.utcnow() - user.reset_token_expires).total_seconds() > 3600:
+        return jsonify({'msg': "Reset token has expired"}), 400
+
+    user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+    user.reset_token = None
+    db.session.commit()
+
+    return jsonify({"msg": "Password has been reset successfully"}), 200
 
 
 @app.route('/api/contact', methods=['POST'])
