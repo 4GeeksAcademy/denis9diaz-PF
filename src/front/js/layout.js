@@ -15,9 +15,10 @@ import Contact from "./pages/Contact";
 import SingleTreasure from "./pages/SingleTreasure";
 import { Home } from "./pages/home";
 import injectContext from "./store/appContext";
-
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import ForgetPassword from "./pages/ForgetPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const Layout = () => {
 
@@ -42,6 +43,8 @@ const Layout = () => {
                         <Route element={<AboutUs />} path="/about-us" />
                         <Route element={<Contact />} path="/contact" />
                         <Route element={<SingleTreasure />} path="/treasure/:id" />
+                        <Route element={<ForgetPassword />} path="/password" />
+                        <Route element={<ResetPassword />} path="/reset-password" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />

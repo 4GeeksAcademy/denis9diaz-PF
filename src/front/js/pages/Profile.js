@@ -160,14 +160,14 @@ const Profile = () => {
             const error = await response.json();
             console.error('Error updating username:', error.message);
         }
-    };
+    }
 
     const uploadProfileImage = async (file) => {
         const formData = new FormData();
         formData.append("file", file);
         formData.append("upload_preset", "treasure");
 
-        const response = await fetch("https://api.cloudinary.com/v1_1/dxzhssh9m/image/upload", {
+        const response = await fetch(`https://api.cloudinary.com/v1_1/${process.env.USER_CLOUDINARY}/image/upload`, {
             method: "POST",
             body: formData
         });

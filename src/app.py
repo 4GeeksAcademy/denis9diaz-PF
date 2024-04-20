@@ -14,12 +14,26 @@ from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import re
+from flask_mail import Mail, Message
+
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
 static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
+
+app.config.update(dict(
+    DEBUG=False,
+    MAIL_SERVER="smtp.gmail.com",
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USE_SSL=False,
+    MAIL_USERNAME="urbantreasures.info@gmail.com",
+    MAIL_PASSWORD='smbbvwybbzzebwpo'
+))
+mail = Mail(app)
+
 CORS(app)
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Change this!
 bcrypt = Bcrypt(app)
@@ -71,7 +85,32 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
+
 ''' ------------------------------------POST-----------------------------------------'''
+
+
+@app.route('/api/contact', methods=['POST'])
+@jwt_required()
+def contact():
+    user_email = get_jwt_identity()
+    body = request.get_json(silent=True)
+    if not body:
+        return jsonify({'msg': "No se han proporcionado datos"}), 400
+
+    name = body.get('name')
+    subject = body.get('subject')
+    message = body.get('message')
+
+    if not all([name, subject, message]):
+        return jsonify({'msg': "Todos los campos son obligatorios excepto el email"}), 400
+
+    msg = Message(subject="Formulario de Contacto: " + subject,
+                  sender=user_email,  
+                  recipients=["urbantreasures.info@gmail.com"])
+    msg.html = f"<h3>Mensaje de: {name}</h3><p>{message}</p>"
+    mail.send(msg)
+
+    return jsonify({"msg": "Mensaje enviado con éxito"}), 200
 
 
 @app.route('/api/hide', methods=['POST'])
@@ -99,6 +138,7 @@ def hide_treasure():
     new_treasure.city_name = body['city_name']
     new_treasure.tips = body['tips']
     new_treasure.user_id = user.id
+    new_treasure.code = body['code']
     db.session.add (new_treasure)
     db.session.commit()
     
@@ -137,6 +177,11 @@ def register():
     new_user.user_type = body["user_type"]
     db.session.add (new_user)
     db.session.commit()
+
+    msg = Message(subject="Welcome mail", sender="urbantreasures.info@gmail.com", recipients=[new_user.email])
+    msg.html = "<h3>Hi {}! Welcome to Urban Treasures. We hope you enjoy the adventure!</h3>".format (new_user.username)
+    mail.send(msg)
+
     return jsonify({"msg": "El usuario ha sido creado con exito"}), 201
 
 
@@ -192,6 +237,15 @@ def mark_treasure_as_found(treasure_id):
     if not treasure:
         return jsonify({'msg': "Tesoro no encontrado"}), 404
 
+    data = request.get_json()
+    submitted_code = data.get('code')
+    
+    if not submitted_code:
+        return jsonify({"msg": "Code required"}), 400
+    
+    if submitted_code != treasure.code:
+        return jsonify({"msg": "Code not correct"}), 403
+
     if treasure.founded:
         return jsonify({'msg': "Este tesoro ya ha sido encontrado"}), 400
 
@@ -211,6 +265,10 @@ def mark_treasure_as_found(treasure_id):
     new_treasure_found = Treasures_Founded(treasures_hide_id=treasure_id, user_found_id=user.id)
     db.session.add(new_treasure_found)
     db.session.commit()
+
+    msg = Message(subject="Treasure founded", sender="urbantreasures.info@gmail.com", recipients=[user_hide.email])
+    msg.html = "<h3>Hello {}, your treasure '{}' is already founded by {}</h3>".format (user_hide.username, treasure.name, user.username)
+    mail.send(msg)
 
     return jsonify({'msg': "Tesoro marcado como encontrado con éxito"}), 201
 
