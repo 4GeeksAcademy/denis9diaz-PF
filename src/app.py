@@ -121,21 +121,20 @@ def reset_password():
     body = request.get_json()
     temp_password = body.get('temp_password')
     new_password = body.get('new_password')
-    reset_token = body.get('reset_token')
 
-    if not temp_password or not new_password or not reset_token:
+    if not temp_password or not new_password:
         return jsonify({'msg': "All fields are required"}), 422
 
-    user = User.query.filter_by(reset_token=reset_token).first()
+    user = User.query.filter_by(temp_password=bcrypt.generate_password_hash(temp_password).decode('utf-8')).first()
 
     if not user:
-        return jsonify({'msg': "Invalid or expired reset token"}), 404
+        return jsonify({'msg': "Invalid or expired temporary password"}), 404
 
-    if (datetime.utcnow() - user.reset_token_expires).total_seconds() > 3600:
-        return jsonify({'msg': "Reset token has expired"}), 400
+    if (datetime.utcnow() - user.temp_password_time).total_seconds() > 3600:
+        return jsonify({'msg': "Temporary password has expired"}), 400
 
     user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
-    user.reset_token = None
+    user.temp_password = None  
     db.session.commit()
 
     return jsonify({"msg": "Password has been reset successfully"}), 200

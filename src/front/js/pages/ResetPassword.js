@@ -13,15 +13,20 @@ const ResetPassword = () => {
             return;
         }
     
-        const token = localStorage.getItem("reset-token"); 
+        const dataToSend = {
+            temp_password: tempPassword,
+            new_password: newPassword
+        };
+    
+        console.log("Sending data:", dataToSend); 
     
         try {
             const response = await fetch(`${process.env.BACKEND_URL}/api/reset-password`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ temp_password: tempPassword, new_password: newPassword, reset_token: token }) 
+                body: JSON.stringify(dataToSend)
             });
             const data = await response.json();
             if (response.ok) {
@@ -31,6 +36,7 @@ const ResetPassword = () => {
             }
         } catch (error) {
             setMessage("Failed to reset password. Try again later.");
+            console.error("Error sending data:", error); 
         }
     };
 
