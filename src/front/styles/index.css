@@ -1241,18 +1241,20 @@ input {
 }
 
 .form-hide {
-    background: linear-gradient(to bottom, #aeaeae 0%, #e7e7e7 100%);
+    background: linear-gradient(to bottom, rgba(153, 153, 153, 0.9) 0%, rgba(153, 153, 153, 0.9) 100%);
     padding: 28px;
     border-radius: 20px;
     color: #000000;
     font-weight: bold;
     width: 90%; 
     max-width: 700px; 
+    border: 1.5px solid grey;
 }
 
 @media only screen and (max-width: 768px) {
     .title-hide {
         font-size: 40px;
+        margin-top: 80px;
     }
 }
 
