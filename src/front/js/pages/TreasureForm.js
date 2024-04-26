@@ -112,7 +112,7 @@ const TreasureForm = () => {
 
     return (
         <div className="text-center treasure-form-page">
-            <h1 className="title-hide pb-4">Hide treasure</h1>
+            <h1 className="title-hide pt-5 pb-4">Hide treasure</h1>
             <form onSubmit={handleSubmit} className="form-hide">
                 <div className="hide-input-group pb-4">
                     <label htmlFor="name-treasure">Name</label>
@@ -137,7 +137,7 @@ const TreasureForm = () => {
                     />
                 </div>
                 <div className="hide-input-group pb-4">
-                    <label htmlFor="location">Location (Select on the map where you have hidden the treasure)</label>
+                    <label htmlFor="location">Location (Select where you hidden the treasure)</label>
                     <LoadScript googleMapsApiKey={process.env.API_KEY_GOOGLE}>
                         <GoogleMap
                             mapContainerStyle={{ width: '100%', height: '350px', borderRadius: '10px', border: '2px solid #FFC107' }}

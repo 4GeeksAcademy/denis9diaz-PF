@@ -122,13 +122,18 @@ input {
     }
 }
 
-/* CSS del Home*/
+/* CSS del PrincipalSection*/
 
-.contenido-relleno {
-    margin-top: 5rem;
-    margin-bottom: 5rem;
-    text-align: center;
-    height: 280px;
+@media (max-width: 768px) {  
+    .principal-section {
+        padding-top: 150px; 
+    }
+}
+
+@media (max-width: 495px) {  
+    .golden-button {
+        margin-top: 7px; 
+    }
 }
 
 .description-title {
@@ -144,6 +149,7 @@ input {
         -1px -1px #fff,
         -1px 1px #fff,
         1px -1px #fff;
+        padding-top: 50px;
 }
 
 .description-text {
@@ -164,7 +170,149 @@ input {
     font-family: 'Play', sans-serif !important;
 }
 
+.video-div{
+    display: flex;
+    justify-content: flex-start;
+    padding-left: 130px;
+    padding-bottom: 10px;
+    padding-top: 30px;
+}
+
+.video{
+    max-width: 100%;
+    height: 390px;
+    margin-top: 0;
+    transition: transform 0.3s ease;
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3); 
+    border: 1.5px solid rgba(207, 207, 207, 0.3); 
+    box-shadow: 0 8px 16px rgba(184, 183, 182, 0.479); 
+    background: rgb(255, 255, 255);
+}
+
+.video:hover{
+    transform: scale(1.1);
+}
+
+.video-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 30px;
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 780px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 20px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 350px; 
+        margin-top: 0; 
+    }
+}
+
+@media (max-width: 1000px) {  
+    .video-div {
+        padding-left: 0; 
+        padding-right: 0; 
+        padding-bottom: 0; 
+        padding-top: 30px; 
+        justify-content: center; 
+    }
+    
+    .video {
+        height: 290px; 
+        margin-top: 0; 
+    }
+}
+
+.blur-background > :not(.video-div) {
+    filter: blur(8px);
+}
+
+.video-centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.6);
+    z-index: 1001;
+    width: 90%;
+    max-width: 900px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    z-index: 1000; 
+}
+
 /* CSS de Navbar*/
+
+@media (max-width: 992px) {
+    .navbar-toggler.collapsed + .collapse {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        flex-wrap: nowrap;
+    }
+    .navbar-nav {
+        flex-direction: row;
+    }
+    .navbar-custom .navbar-brand .link-text,
+    .navbar-custom .navbar-brand:hover .link-text {
+        display: none;
+    }
+    .navbar-nav.ms-auto {
+        flex-grow: 0;
+    }
+    .nav-item {
+        margin-right: 5px;
+    }
+    .nav-item .navbar-brand {
+        padding: 0;
+    }
+    .nav-item .div-icono {
+        margin-right: 0; 
+    }
+    .div-bar {
+        margin: 0; 
+        padding: 0; 
+    }
+    .boton-navbar{
+        margin-right: 5px;
+    }
+}
+
+.navbar-custom .navbar-brand {
+    padding: 0; 
+    margin: 0; 
+}
 
 .dropdown-menu {
     font-family: 'Play', sans-serif !important;
@@ -277,10 +425,16 @@ input {
 }
 
 .imageLogo {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     margin-left: 40px;
     margin-right: 150px;
+    margin-top: 10px;
+    transition: transform 0.5s ease;
+}
+
+.imageLogo:hover{
+    transform: scale(1.1);
 }
 
 .logout {
@@ -299,6 +453,8 @@ input {
 
 .fa-solid{
     color: #FFC107!important;
+    font-size: 2.5rem !important;
+    margin-top: 10px;
 }
 
 /* CSS de Rankings*/
@@ -307,6 +463,8 @@ input {
     background: linear-gradient(to bottom, #575757 0%, #000000 100%);
     padding-top: 150px;
     min-height: 100vh;
+    width: 100%; 
+    margin: 0 auto; 
 }
 
 .rankings-container {
@@ -315,8 +473,9 @@ input {
     padding: 20px;
     gap: 20px;
     font-family: 'Play', sans-serif !important;
-    width: 60%;
+    max-width: 1000px;
     margin: 0 auto; 
+    flex-wrap: wrap; 
 }
 
 .ranking {
@@ -325,7 +484,70 @@ input {
     border: 1px solid rgba(219, 219, 219, 0.712);
     padding: 10px;
     border-radius: 10px;
-    background-color: black;
+    background-color: black; 
+    margin-bottom: 20px; 
+}
+
+.button-rankings-options {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Play', sans-serif !important;
+    margin: 0 auto; 
+    margin-bottom: 10px; 
+    font-size: 20px; 
+    background-color: #000000;
+    color: white;
+    border: 2px solid white;
+}
+
+.button-rankings-options:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #ffffff;
+    color: black;
+    transform: scale(1.05);
+}
+
+.text-ranks-div {
+    font-size: 22px; 
+    color: white;
+    font-family: 'Play', sans-serif !important;
+    padding-bottom: 70px;
+    text-align: center; 
+    width: 100%;
+}
+
+@media (max-width: 900px) {
+    .rankings-div {
+        width: 100%; 
+    }
+
+    .button-rankings-options {
+        font-size: 16px; 
+    }
+
+    .text-ranks-div {
+        font-size: 18px; 
+    }
+}
+
+@media (max-width: 727px) {
+    .rankings-div {
+        width: 100%; 
+    }
+
+    .button-rankings-options {
+        font-size: 14px; 
+        margin-top: 60px;
+    }
+
+    .text-ranks-div {
+        font-size: 16px; 
+    }
 }
 
 .table {
@@ -363,7 +585,7 @@ input {
 .first .name,
 .first .score {
     color: gold;
-    font-size: 34px;
+    font-size: 27px;
     text-shadow: 0 0 8px rgba(255, 215, 0, 2);
 }
 
@@ -371,7 +593,7 @@ input {
 .second .name,
 .second .score {
     color: rgb(190, 181, 181);
-    font-size: 31px;
+    font-size: 25px;
     text-shadow: 0 0 8px rgba(192, 192, 192, 2);
 }
 
@@ -379,7 +601,7 @@ input {
 .third .name,
 .third .score {
     color: #d39353;
-    font-size: 28px;
+    font-size: 23px;
     text-shadow: 0 0 8px rgba(205, 127, 50, 2);
 }
 
@@ -387,7 +609,7 @@ input {
 .other .name,
 .other .score {
     color: white;
-    font-size: 22px;
+    font-size: 21px;
 }
 
 .name {
@@ -437,34 +659,6 @@ input {
     font-size: 25px;
 }
 
-.button-rankings-options {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border-radius: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-family: 'Play', sans-serif !important;
-}
-
-.button-rankings-options:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.button-rankings-options {
-    background-color: #000000;
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    font-size: 20px;
-}
-
-.button-rankings-options:hover {
-    background-color: #ffffff;
-    color: black;
-    transform: scale(1.05);
-}
-
 .ranking-companies {
     max-width: 60%;
     margin: 0 auto;
@@ -473,18 +667,6 @@ input {
 .ranking-users {
     max-width: 60%;
     margin: 0 auto;
-}
-
-.text-ranks-div {
-    font-size: 22px;
-    color: white;
-    
-    font-family: 'Play', sans-serif !important;
-    padding-left: 25px;
-    padding-bottom: 70px;
-    padding-top: 30px;
-    padding-left: 200px;
-
 }
 
 .text-ranks {
@@ -534,7 +716,7 @@ input {
     padding: 10px; 
 }
 
-@media (min-width: 992px) { 
+@media (min-width: 1555px) { 
     .image-description {
         flex: 0 0 30%; 
     }
@@ -648,7 +830,7 @@ input {
 
 .right-column-how {
     display: flex;
-    align-items: center;
+    justify-content: space-around;
 }
 
 @media (max-width: 768px) { 
@@ -658,7 +840,7 @@ input {
     }
 }
 
-@media (max-width: 992px) { 
+@media (max-width: 1100px) { 
     .right-column-how {
         flex-direction: column;
         align-items: center;
@@ -683,27 +865,6 @@ input {
     display: flex;
     width: 100%;
 }
-
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid rgba(0,0,0,.1);
-    border-radius: 50%;
-    border-top-color: #007bff;
-    animation: spin 1s ease-in-out infinite;
-  }
-  
-  @keyframes spin {
-    to { transform: rotate(360deg); }
-  }
-  
-  .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f8f9fa;
-  }
 
 .sidebar {
     flex: 1;
@@ -735,56 +896,6 @@ input {
     padding-left: 20px;
 }
 
-.user-info h2,
-.user-info p {
-    margin: 5px 0;
-}
-
-.elementos-profile td {
-    text-align: left;
-    vertical-align: middle;
-    font-size: 18px;
-}
-
-.image-title-profile {
-    width: 200px;
-}
-
-.name-title-profile {
-    width: 250px;
-}
-
-.description-title-list-profile {
-    width: 350px;
-}
-
-.city-title-profile {
-    width: 200px;
-}
-
-.title-hide-profile {
-    text-shadow: 2px 2px 6px #ccc;
-}
-
-.table-list-profile {
-    background-color: black;
-    color: white;
-    font-size: 25px;
-    padding-left: 150px;
-    text-align: left;
-    text-align: center;
-}
-
-.table-list-profile th,
-.table-list-profile td {
-    border: 0.5px solid #5f5f5f;
-}
-
-.configuration {
-    padding-left: 150px;
-    text-align: left;
-}
-
 .my-profile {
     display: flex;
     align-items: center;
@@ -795,20 +906,6 @@ input {
     padding-top: 15px;
     padding-bottom: 30px;
     background-color: #535353;
-    box-shadow: 3px 3px 3px rgba(232, 240, 167, 0.5)
-}
-
-.edit-profile-btn {
-    position: absolute; 
-    top: 57%; 
-    left: 59%; 
-    transform: translateX(-50%); 
-    color: #000000; 
-}
-
-.treasures-activity {
-    padding-left: 150px;
-    text-align: left;
 }
 
 .photo-container {
@@ -841,6 +938,7 @@ input {
 
 .user-info {
     text-align: left;
+    width: 100%; 
 }
 
 .username-text-profile {
@@ -899,16 +997,209 @@ input {
     transition: width 0.5s ease; 
 }
 
-.image-elements-profile img {
-    width: 200px; 
-    height: 100px; 
-    object-fit: cover; 
-}
-
 .btn-change{
     background-color: #FFC107 !important;
     color: black;
     border-radius: 30px;
+}
+
+@media (max-width: 1000px) {
+    .profile-cont {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sidebar ul li {
+        flex: 1;  
+    }
+
+    .content {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .my-profile {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto; 
+    }
+
+    .photo-container {
+        padding-bottom: 20px;
+    }
+
+    .user-info {
+        text-align: center;
+    }
+
+    .status-progress {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-bar-container {
+        width: 100%;  
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-cont {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+        padding-left: 0;
+        padding-top: 15px;
+    }
+
+    .sidebar ul {
+        display: flex;
+        justify-content: center;
+    }
+
+    .sidebar ul li {
+        flex: 1; 
+    }
+
+    .content {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .my-profile {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: auto; 
+    }
+
+    .photo-container {
+        padding-bottom: 20px;
+    }
+
+    .user-info {
+        text-align: center;
+    }
+
+    .status-progress {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .progress-bar-container {
+        width: 100%;  
+    }
+}
+
+@media (max-width: 480px) {
+    .sidebar ul li {
+        font-size: 20px; 
+    }
+
+    .username-text-profile {
+        font-size: 35px;  
+    }
+
+    .points-text-profile,
+    .status-text-profile {
+        font-size: 25px;
+    }
+}
+
+.table-list-profile {
+    background-color: black;
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0.9;
+    max-width: 800px;
+}
+
+.table-list-profile th, .table-list-profile td {
+    border: 0.5px solid #5f5f5f;
+    padding: 8px;
+    text-align:left;
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px; 
+}
+
+.image-elements-profile {
+    width: 80px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.image-elements-profile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .table-list-profile {
+        font-size: 18px;
+    }
+
+    .image-elements-profile {
+        width: 60px;
+        height: 90px;  
+    }
+
+    .image-elements-profile img {
+        width: 100%;  
+        height: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .table-list-profile th, .table-list-profile td {
+        width: auto; 
+    }
+
+    .image-elements-profile {
+        width: 40px;
+        height: 60px;  
+    }
+
+    .image-elements-profile img {
+        display: block;  
+        width: 100%; 
+        height: 100%; 
+        max-width: 50px;  
+    }
+}
+
+.name-title-profile, .city-title-profile {
+    width: 150px;  
+}
+
+.image-title-profile{
+    width: 100px;
 }
 
 /* CSS de TreasureForm*/
@@ -920,23 +1211,13 @@ input {
     padding-top: 150px;
     padding-bottom: 50px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-}
-
-.hide-input-group {
-    text-align: left;
-    font-size: 20px;
-    width: 70vh;
-}
-
-.treasure-image-form{
-    border: none;
 }
 
 .title-hide {
-    display: inline-block;
+    display: block;
     padding: 5px 10px;
     font-size: 50px;
     color: black;
@@ -950,14 +1231,61 @@ input {
         -1px -1px #fff,
         -1px 1px #fff,
         1px -1px #fff;
+    margin-bottom: 20px;
+    width: 90%; 
+    max-width: 500px; 
 }
 
-.treasure-name {
-    border-radius: 10px;
+.form-hide {
+    background: linear-gradient(to bottom, #aeaeae 0%, #e7e7e7 100%);
+    padding: 28px;
+    border-radius: 20px;
+    color: #000000;
+    font-weight: bold;
+    width: 90%; 
+    max-width: 700px; 
 }
 
-.treasure-tips {
-    border-radius: 10px;
+@media only screen and (max-width: 768px) {
+    .title-hide {
+        font-size: 40px;
+    }
+}
+
+.hide-input-group {
+    text-align: left;
+    font-size: 20px;
+    width: 100%; 
+    margin-bottom: 0px; 
+}
+
+.hide-input-group label {
+    display: block; 
+    margin-bottom: 5px; 
+}
+
+.treasure-name,
+.treasure-tips,
+.treasure-city,
+.treasure-image-form {
+    width: calc(100% - 30px); 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.treasure-city {
+    width: calc(100% - 50px);
+}
+
+.google-map-container {
+    width: 100%; 
+    height: 300px; 
+    border-radius: 10px; 
+    border: 2px solid #FFC107; 
+    margin-bottom: 20px; 
 }
 
 .btn-hide{
@@ -981,18 +1309,32 @@ input {
 }
 
 .button-hide{
-    padding-bottom: 50px;
-}
-
-.form-hide{
-    background: linear-gradient(to bottom, #c0c0c0 0%, #dadada 100%);
-    padding: 15px;
-    border-radius: 20px;
-    color: #000000;
-    font-weight: bold;
+    padding-bottom: 20px;
 }
 
 /* CSS de TreasureList*/
+
+@media (max-width: 666px) {
+    .title-page-list {
+        padding-top: 400px; 
+    }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    .user-title{
+        width: auto;
+    }
+    .table-list{
+        width: auto;
+    }
+}
 
 .treasure-list-page {
     font-family: 'Play', sans-serif !important;
@@ -1051,6 +1393,17 @@ input {
     .find-it-title {
         width: auto; 
     }
+    .find-it-elements {
+        text-align: left;
+        vertical-align: middle;
+    }
+    
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
 }
 
 .image-container {
@@ -1086,18 +1439,8 @@ input {
     width: 20%; 
 }
 
-.button-see-more {
-    font-size: 15px !important;
-    justify-content: end !important;
-}
-
-.button-see-more {
-    margin-left: 10px;
-}
-
 .btn-prev, .btn-next {
     font-size: 20px;
-    font-weight: bold;
     color: #FFC107; 
     background-color: #000000; 
     border: none;
@@ -1119,6 +1462,19 @@ input {
     color: #666666; 
     cursor: default; 
     box-shadow: none; 
+}
+
+.find-it-elements {
+    text-align: left;
+    vertical-align: middle;
+    width: 20%;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* CSS de Status*/
@@ -1275,14 +1631,6 @@ input {
     color: #FFC107;
   }
 
-  .footer-section-3{
-    padding-left: 150px;
-  }
-
-  .footer-section-2{
-    padding-left: 150px;
-  }
-
 /* CSS de Contact */
 
 .page-contact{
@@ -1290,6 +1638,7 @@ input {
     padding-top: 150px;
     padding-bottom: 50px;
     font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
 }
 
 .contact {
@@ -1394,8 +1743,8 @@ input {
 .about-us-page.container {
     margin: 0; 
     max-width: 100%; 
-    padding-left: 300px;
-    padding-right: 300px;
+    padding-left: 10vh;
+    padding-right: 10vh;
 }
 
 .about-us-banner {
@@ -1622,4 +1971,32 @@ input {
     color: red;
     text-align: center;
     margin-top: 10px;
+}
+
+/* CSS de Spinner de carga */
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
